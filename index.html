@@ -18,11 +18,9 @@
     .code-container {
       font-family: 'Courier New', Courier, monospace;
     }
-
     .page-header {
       margin-bottom: 48px;
     }
-
     .hide {
       display: none;
     }
@@ -83,6 +81,26 @@
             </textarea>
       </div>
     </div>
+
+        <div class="row">
+      <div class="col-md-6  col-sm-12 col-12">
+        <h3 class="text-center">Execute multiple Notebooks at once</h3>
+        Select notebooks: <input type="file" name="notebooks" multiple onchange="onNotebooksSelected(event)"> <br>
+        Select text file(s): <input type="file" name="textfiles" multiple onchange="onTextFilesSelected(event)"> <br>
+        <button type="button" class="btn btn-sm btn-warning" onclick="executeNotebooks()">Run notebooks</a>
+      </div>
+
+      <div class="col-md-6 col-sm-12 col-12">
+        <h3 class="text-center">Test Results
+         <button type="button" class="btn btn-sm btn-success" onclick="downloadResults()">Download Test Results</a>
+        </h3>
+        <table id="JSONResultTable" class="w3-table  w3-bordered">
+          <tr>
+            <th>JSON results</th>
+          </tr>
+        </table>
+      </div>
+    </div>
   </div>
 
 
@@ -102,31 +120,42 @@
       console.log("POSTing ipynb text as JSON");
       var x = document.getElementById("ipynbInputTextField").value;
       var inputText = document.getElementById("textField").value;
-
       if (x)
         var nb = JSON.parse(x);
-
       if (inputText && inputText.length > 0 && (!window.UPLOADED_FILES || window.UPLOADED_FILES.length === 0)) {
         window.UPLOADED_FILES = [
           {name: 'data1.txt',
           content: btoa(inputText)}
         ];
       }
-
-
       var result = {};
       result['notebook'] = nb;
-
       if (window.UPLOADED_FILES) {
         result.files = {};
         for (var i = 0; i < window.UPLOADED_FILES.length; i++) {
           result.files[window.UPLOADED_FILES[i].name] = window.UPLOADED_FILES[i].content;
         }
       }
-
-
       postData(result)
     }
+
+    var executeNotebooks = function () {
+      if(window.NOTEBOOKS){
+        for (var notebookNumber = 0; notebookNumber < window.NOTEBOOKS.length; notebookNumber++){
+          notebook = JSON.parse(window.NOTEBOOKS[notebookNumber]);
+          var result = {};
+          result['notebook'] = notebook;
+          if (window.TEXT_FILES){
+            result.files = {};
+            for (var i = 0; i < window.UPLOADED_FILES.length; i++) {
+              result.files[window.UPLOADED_FILES[i].name] = window.UPLOADED_FILES[i].content;
+            }
+          }
+          postDataMore(result)
+        }
+      }
+    }
+
     var postData = function (data) {
       var xhr = new XMLHttpRequest();
       xhr.open('POST', '');
@@ -152,6 +181,33 @@
       xhr.send(JSON.stringify(data));
     }
 
+    var postDataMore = function (data) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '');
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          var userInfo = JSON.parse(xhr.responseText);
+          console.log(userInfo.duration, "seconds of execution time.")
+          console.log(userInfo,"userInfo")
+          var table = document.getElementById("myTable");
+          var row = table.insertRow(0);
+          var cell1 = row.insertCell(0);
+          cell1.innerHTML = JSON.stringify(userInfo.result);
+
+          // pass data to component via problem global object
+          window.problem = userInfo.ipynb;
+          const button = document.getElementById('root1').querySelector('#NotebookPreview').nextSibling;
+          button.click('e');
+        }
+        else {
+          console.log("Nope");
+          document.getElementById("responseJSON").value = "Nope";
+        }
+      };
+      xhr.send(JSON.stringify(data));
+    }
+
     function encodeUploadedFiles(files) {
       console.log(files);
       for (var i = 0; i < files.length; i++) {
@@ -162,13 +218,10 @@
           var fileInfo = {name: currentFile.name, content: btoa(binaryString) };
           window.UPLOADED_FILES.push(fileInfo);
         };
-
         reader.readAsBinaryString(files[i]);
       }
-
       $("#fileinfo").text("Selected files: " + files.length);
     }
-
     /*
       This function is being executed each time a new .ipynb file is selected. It puts
       contents of the .ipynb file to the input text area with the 'ipynbInputTextField' ID.
@@ -177,14 +230,42 @@
       var reader = new FileReader();
       reader.onload = onInputIpynbReaderLoad;
       reader.readAsText(event.target.files[0]);
-
     }
-
     function onMultipleFilesSelected(event) {
       window.UPLOADED_FILES = [];
       encodeUploadedFiles(event.target.files);
     }
 
+    function onTextFilesSelected(event) {
+      window.TEXT_FILES = [];
+      files = event.target.files;
+      for (var i = 0; i < files.length; i++) {
+        var reader = new FileReader();
+        const currentFile = files[i];
+        reader.onload = function (readerEvt) {
+          var binaryString = readerEvt.target.result;
+          var fileInfo = {name: currentFile.name, content: btoa(binaryString) };
+          window.TEXT_FILES.push(fileInfo);
+        };
+        reader.readAsBinaryString(files[i]);
+      }
+    }
+
+   function onNotebooksSelected(event) {
+      window.NOTEBOOKS = [];
+      files = event.target.files;
+      for (var i = 0; i < files.length; i++) {
+        var reader = new FileReader();
+        const currentFile = files[i];
+        reader.onload = function (readerEvt) {
+          var binaryString = readerEvt.target.result;
+          //window.alert(binaryString)
+          //var fileInfo = {name: currentFile.name, content: btoa(binaryString) };
+          window.NOTEBOOKS.push(binaryString);
+        };
+        reader.readAsText(files[i]);
+      }
+    }
     /* 
         This function is being executed each time a new text file is selected.
         It puts contents of the file to the text area with the 'textField' ID.
@@ -195,12 +276,9 @@
       var fileReader = new FileReader();
       fileReader.onload = textFileReaderLoadHandler;
       fileReader.readAsText(event.target.files[0]);
-
       window.UPLOADED_FILES = [];
-
       encodeUploadedFiles([event.target.files[0]]);
     }
-
     function onInputIpynbReaderLoad(event) {
       //console.log(event.target.result);
       if (event.target.result) {
@@ -209,7 +287,6 @@
       loadJSON(obj);
       document.getElementById("ipynbInputTextField").value = JSON.stringify(obj);
     }
-
     function textFileReaderLoadHandler(event) {
       //console.log(event.target.result);
       if (event.target.result) {
@@ -217,34 +294,26 @@
       }
       document.getElementById("textField").value = obj;
     }
-
     function download(filename, text) {
       var element = document.createElement('a');
       element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
       element.setAttribute('download', filename);
-
       element.style.display = 'none';
       document.body.appendChild(element);
-
       element.click();
-
       document.body.removeChild(element);
     }
-
     function downloadNotebook() {
       var fileContents = document.getElementById("responseJSON").value;
       download("notebook.ipynb", fileContents);
     }
-
     function downloadResults() {
       var fileContents = document.getElementById("resultJSON").value;
       download("results.json", fileContents);
     }
-
     document.getElementById('file').addEventListener('change', onChange);
     document.getElementById('textfile').addEventListener('change', onTextFileSelected);
     document.getElementById('multipleFiles').addEventListener('change', onMultipleFilesSelected);
-
   </script>
   <script type="text/javascript"  src="https://s3-ap-southeast-1.amazonaws.com/alset-public/main-jupter-react-viewer.js"></script>
   <script>
