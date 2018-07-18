@@ -38,7 +38,19 @@
         <button type="button" onClick="javascript:executeNotebook()" class="btn btn-danger">Execute Notebook</a>
       </div>
     </div>
-    <div class="row">
+    <div class="col-md-6  col-sm-12 col-12">
+        <h3 class="text-center">Execute multiple Notebooks at once</h3>
+        Select notebooks: <input type="file" name="notebooks" multiple onchange="onNotebooksSelected(event)"> <br>
+        Select text file(s): <input type="file" name="textfiles" multiple onchange="onTextFilesSelected(event)"> <br>
+        <button type="button" class="btn btn-sm btn-warning" onclick="executeNotebooks()">Run all</a>
+    </div>
+    <table id="mainTable" class="table">
+    <tr>
+      <th>File names</th><th>JSON results</th>
+    </tr>
+    </table>
+
+    <div class="row hide">
       <div class="col-md-6  col-sm-12 col-12">
         <h3 class="text-center">Input Jupyter Notebook
           <button type="button" onClick="javascript: document.getElementById('file').click()" class="btn btn-sm btn-primary">Upload from a file</a>
@@ -83,13 +95,6 @@
     </div>
 
         <div class="row">
-      <div class="col-md-6  col-sm-12 col-12">
-        <h3 class="text-center">Execute multiple Notebooks at once</h3>
-        Select notebooks: <input type="file" name="notebooks" multiple onchange="onNotebooksSelected(event)"> <br>
-        Select text file(s): <input type="file" name="textfiles" multiple onchange="onTextFilesSelected(event)"> <br>
-        <button type="button" class="btn btn-sm btn-warning" onclick="executeNotebooks()">Run notebooks</a>
-      </div>
-
       <div class="col-md-6 col-sm-12 col-12">
         <h3 class="text-center">Test Results from multiple notebooks
         </h3>
@@ -261,14 +266,18 @@
         var reader = new FileReader();
         const currentFile = files[i];
         reader.onload = function (readerEvt) {
+          var table = document.getElementById("mainTable");
+          var row = table.insertRow(-1);
+          var cell1 = row.insertCell(0);
           var binaryString = readerEvt.target.result;
-          //window.alert(binaryString)
-          //var fileInfo = {name: currentFile.name, content: btoa(binaryString) };
+          cell1.innerHTML = JSON.stringify(currentFile.name);
+          row.notebook = binaryString;
           window.NOTEBOOKS.push(binaryString);
         };
         reader.readAsText(files[i]);
       }
     }
+
     /* 
         This function is being executed each time a new text file is selected.
         It puts contents of the file to the text area with the 'textField' ID.
