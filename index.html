@@ -119,6 +119,7 @@
       console.log("POSTing ipynb text as JSON");
       var x = document.getElementById("ipynbInputTextField").value;
       var inputText = document.getElementById("textField").value;
+      document.getElementById("resultJSON").value = "";
       if (x)
         var nb = JSON.parse(x);
       if (inputText && inputText.length > 0 && (!window.UPLOADED_FILES || window.UPLOADED_FILES.length === 0)) {
@@ -181,6 +182,14 @@
     }
 
     var postDataMore = function (data) {
+      var table = document.getElementById("JSONResultTable")
+      while (table.hasChildNodes()) {  
+        table.removeChild(table.firstChild);
+      } 
+      var row = table.insertRow(-1);
+      var th = document.createElement('th');
+      th.innerHTML = "JSON results";
+      row.appendChild(th);
       var xhr = new XMLHttpRequest();
       xhr.open('POST', '');
       xhr.setRequestHeader('Content-Type', 'application/json');
