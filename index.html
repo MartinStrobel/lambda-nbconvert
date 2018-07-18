@@ -289,7 +289,21 @@
 
     function deleteRow(e){
       e.closest("tr").remove();
-    }
+    } 
+
+    function executeRow(e){
+      row = e.closest("tr");
+      notebook = JSON.parse(row.getAttribute("notebook"));
+      var result = {};
+      result['notebook'] = notebook;
+      if (window.TEXT_FILES){
+        result.files = {};
+        for (var i = 0; i < window.UPLOADED_FILES.length; i++) {
+          result.files[window.UPLOADED_FILES[i].name] = window.UPLOADED_FILES[i].content;
+        }
+      }
+      postDataMore(result)
+    } 
 
     /* 
         This function is being executed each time a new text file is selected.
