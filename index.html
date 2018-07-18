@@ -118,104 +118,6 @@
       const button = document.getElementById('NotebookPreview').nextSibling;
       button.click();
     }
-    var executeNotebook = function () {
-      window.problem = window.problemJsonFile;
-      const button = document.getElementById('root1').querySelector('#NotebookPreview').nextSibling;
-      button.click('e');
-      console.log("POSTing ipynb text as JSON");
-      var x = document.getElementById("ipynbInputTextField").value;
-      var inputText = document.getElementById("textField").value;
-      document.getElementById("resultJSON").value = "";
-      if (x)
-        var nb = JSON.parse(x);
-      if (inputText && inputText.length > 0 && (!window.UPLOADED_FILES || window.UPLOADED_FILES.length === 0)) {
-        window.UPLOADED_FILES = [
-          {name: 'data1.txt',
-          content: btoa(inputText)}
-        ];
-      }
-      var result = {};
-      result['notebook'] = nb;
-      if (window.UPLOADED_FILES) {
-        result.files = {};
-        for (var i = 0; i < window.UPLOADED_FILES.length; i++) {
-          result.files[window.UPLOADED_FILES[i].name] = window.UPLOADED_FILES[i].content;
-        }
-      }
-      postData(result)
-    }
-
-    var executeNotebooks = function () {
-      if(window.NOTEBOOKS){
-        for (var notebookNumber = 0; notebookNumber < window.NOTEBOOKS.length; notebookNumber++){
-          notebook = JSON.parse(window.NOTEBOOKS[notebookNumber]);
-          var result = {};
-          result['notebook'] = notebook;
-          if (window.TEXT_FILES){
-            result.files = {};
-            for (var i = 0; i < window.UPLOADED_FILES.length; i++) {
-              result.files[window.UPLOADED_FILES[i].name] = window.UPLOADED_FILES[i].content;
-            }
-          }
-          postDataMore(result)
-        }
-      }
-    }
-
-    var postData = function (data) {
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', '');
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.onload = function () {
-        if (xhr.status === 200) {
-          var userInfo = JSON.parse(xhr.responseText);
-          console.log(userInfo.duration, "seconds of execution time.")
-          console.log(userInfo,"userInfo")
-          document.getElementById("responseJSON").value = JSON.stringify(userInfo.ipynb);
-          document.getElementById("resultJSON").value = JSON.stringify(userInfo.result);
-          
-          // pass data to component via problem global object
-          window.problem = userInfo.ipynb;
-          const button = document.getElementById('root1').querySelector('#NotebookPreview').nextSibling;
-          button.click('e');
-        }
-        else {
-          console.log("Nope");
-          document.getElementById("responseJSON").value = "Nope";
-        }
-      };
-      xhr.send(JSON.stringify(data));
-    }
-
-    var postDataMore = function (data) {
-      var table = document.getElementById("JSONResultTable")
-      while (table.hasChildNodes()) {  
-        table.removeChild(table.firstChild);
-      } 
-      var row = table.insertRow(-1);
-      var th = document.createElement('th');
-      th.innerHTML = "JSON results";
-      row.appendChild(th);
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', '');
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.onload = function () {
-        if (xhr.status === 200) {
-          var userInfo = JSON.parse(xhr.responseText);
-          console.log(userInfo.duration, "seconds of execution time.")
-          console.log(userInfo,"userInfo")
-          var table = document.getElementById("JSONResultTable");
-          var row = table.insertRow(-1);
-          var cell1 = row.insertCell(0);
-          cell1.innerHTML = JSON.stringify(userInfo.result);
-        }
-        else {
-          console.log("Nope");
-          document.getElementById("responseJSON").value = "Nope";
-        }
-      };
-      xhr.send(JSON.stringify(data));
-    }
 
     function encodeUploadedFiles(files) {
       console.log(files);
@@ -269,7 +171,6 @@
         reader.onload = function (readerEvt) {
           var notebook = readerEvt.target.result;
           createNewTableRow(notebook,currentFile.name)
-          window.NOTEBOOKS.push(notebook);
         };
         reader.readAsText(files[i]);
       }
