@@ -271,7 +271,7 @@
           var cell1 = row.insertCell(0);
           var binaryString = readerEvt.target.result;
           cell1.innerHTML = JSON.stringify(currentFile.name);
-          row.notebook = binaryString;
+          row.setAttribute("notebook", binaryString);
           window.NOTEBOOKS.push(binaryString);
         };
         reader.readAsText(files[i]);
