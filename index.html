@@ -47,7 +47,7 @@
     </div>
     <table id="mainTable" class="table">
     <tr>
-      <th><th><th>File names</th><th>JSON results</th>
+      <th></th><th>File names</th><th>JSON results</th>
     </tr>
     </table>
 
@@ -279,12 +279,16 @@
       var table = document.getElementById("mainTable");
       var row = table.insertRow(-1);
       var buttonCell = row.insertCell(-1);
-      buttonCell.innerHTML = "<button type='button' class='btn btn-sm btn-danger'><i class='fa fa-trash-o'></i></button> \
-                              <button type='button' class='btn btn-sm btn-danger'><i class='fa fa-search'></i>></button> \
-                              <button type='button' class='btn btn-sm btn-danger'><i class='fa fa-refresh'></i>></button>"
+      buttonCell.innerHTML = "<button type='button' class='btn btn-sm btn-danger'  onclick='deleteRow(this)' ><i class='fa fa-trash-o'></i></button> \
+                              <button type='button' class='btn btn-sm btn-warning' onclick='showRow(this)' ><i class='fa fa-search'> </i></button> \
+                              <button type='button' class='btn btn-sm btn-success' onclick='executeRow(this)'><i class='fa fa-refresh'></i></button>"
       var nameCell = row.insertCell(-1);
       nameCell.innerHTML = JSON.stringify(name);
       row.setAttribute("notebook", notebook);
+    }
+
+    function deleteRow(e){
+      e.closest("tr").remove();
     }
 
     /* 
