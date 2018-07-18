@@ -47,7 +47,7 @@
     </div>
     <table id="mainTable" class="table">
     <tr>
-      <th>File names</th><th>JSON results</th>
+      <th><th><th>File names</th><th>JSON results</th>
     </tr>
     </table>
 
@@ -269,7 +269,7 @@
         reader.onload = function (readerEvt) {
           var notebook = readerEvt.target.result;
           createNewTableRow(notebook,currentFile.name)
-          window.NOTEBOOKS.push(binaryString);
+          window.NOTEBOOKS.push(notebook);
         };
         reader.readAsText(files[i]);
       }
@@ -279,7 +279,9 @@
       var table = document.getElementById("mainTable");
       var row = table.insertRow(-1);
       var buttonCell = row.insertCell(-1);
-      buttonCell.innerHTML = "<button type='button' class='btn btn-sm btn-danger'><i class='fa fa-trash-o'></button> <button type='button' ></button> <button type='button'></button>"
+      buttonCell.innerHTML = "<button type='button' class='btn btn-sm btn-danger'><i class='fa fa-trash-o'></i></button> \
+                              <button type='button' class='btn btn-sm btn-danger'><i class='fa fa-search'></i>></button> \
+                              <button type='button' class='btn btn-sm btn-danger'><i class='fa fa-refresh'></i>></button>"
       var nameCell = row.insertCell(-1);
       nameCell.innerHTML = JSON.stringify(name);
       row.setAttribute("notebook", notebook);
