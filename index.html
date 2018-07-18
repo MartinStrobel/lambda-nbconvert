@@ -285,6 +285,7 @@
       var nameCell = row.insertCell(-1);
       nameCell.innerHTML = JSON.stringify(name);
       row.setAttribute("notebook", notebook);
+      row.insertCell(-1);
     }
 
     function deleteRow(e){
@@ -302,8 +303,29 @@
           result.files[window.UPLOADED_FILES[i].name] = window.UPLOADED_FILES[i].content;
         }
       }
-      postDataMore(result)
+      postDataRow(result,row)
     } 
+
+    var postDataRow = function (data,row) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '');
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          var userInfo = JSON.parse(xhr.responseText);
+          console.log(userInfo.duration, "seconds of execution time.")
+          console.log(userInfo,"userInfo")
+          row.setAttribute("executedNotebook", JSON.stringify(userInfo.ipynb))
+          //TODO: Make access  nicer
+          row.children[2].innerHTML = JSON.stringify(userInfo.result)
+        }
+        else {
+          console.log("Nope");
+          document.getElementById("responseJSON").value = "Nope";
+        }
+      };
+      xhr.send(JSON.stringify(data));
+    }
 
     /* 
         This function is being executed each time a new text file is selected.
