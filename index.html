@@ -193,8 +193,7 @@
     } 
 
     function executeAllRows(e){
-      var things = $('#mainTable > tr');
-      $.each(things,executeRow(this));
+      $.each($('#mainTable > tbody > tr'),executeRow(this));
     } 
 
     var postDataRow = function (data,row) {
