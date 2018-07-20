@@ -193,7 +193,8 @@
     } 
 
     function executeAllRows(e){
-      $.each($('#mainTable > tr').not(":first"),executeRow(this));
+      var things = $('#mainTable > tr').not(":first");
+      $.each(things,executeRow(this));
     } 
 
     var postDataRow = function (data,row) {
