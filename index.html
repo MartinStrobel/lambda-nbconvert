@@ -40,7 +40,7 @@
     <div class="col-md-6  col-sm-12 col-12">
         Select notebooks: <input type="file" name="notebooks" multiple onchange="onNotebooksSelected(event)"> <br>
         Select text file(s): <input type="file" name="textfiles" multiple onchange="onTextFilesSelected(event)"> <br>
-        <button type="button" class="btn btn-sm btn-warning" onclick="executeNotebooks()">Run all</a>
+        <button type="button" class="btn btn-sm btn-warning" onclick="executeAllRows()">Run all</a>
     </div>
     <table id="mainTable" class="table">
     <tr>
@@ -190,6 +190,10 @@
         }
       }
       postDataRow(result,row)
+    } 
+
+    function executeAllRows(e){
+      $('#mainTable > tr').not(":first").each(executeRow(this));
     } 
 
     var postDataRow = function (data,row) {
