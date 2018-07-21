@@ -220,6 +220,7 @@
     function showRow(e){
       notebook = getNotebookForRow(e);
       modal = $("#notebookModal");
+      loadJSON(notebook);
       modal.find(".code-container").value = JSON.stringify(notebook);
     }
 
