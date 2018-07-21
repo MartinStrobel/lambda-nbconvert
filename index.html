@@ -258,8 +258,8 @@
           row.setAttribute("executedNotebook", JSON.stringify(userInfo.ipynb));
           $(row).find("td.jsonResult")[0].innerHTML = JSON.stringify(userInfo.result);
           var resultbuttonCell = row.insertCell(-1);
-          resultbuttonCell.innerHTML = "<button type='button' class='btn btn-sm btn-warning'  onclick='showRowResult(this)' ><i class='fa fa-search'></i></button> \
-                              <button type='button' class='btn btn-sm btn-success' data-toggle='modal' data-target='#notebookModal' onclick='downloadRow(this)' ><i class='fa fa-download'> </i></button>"
+          resultbuttonCell.innerHTML = "<button type='button' class='btn btn-sm btn-warning'  data-toggle='modal' data-target='#notebookModal' onclick='showRowResult(this)' ><i class='fa fa-search'></i></button> \
+                              <button type='button' class='btn btn-sm btn-success'  onclick='downloadRow(this)' ><i class='fa fa-download'> </i></button>"
         }
         else {
           console.log("Nope");
