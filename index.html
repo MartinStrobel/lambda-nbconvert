@@ -247,7 +247,7 @@
       return JSON.parse(row.getAttribute("executedNotebook"));
     }
 
-    function downloadExecutedNotebook() {
+    function downloadExecutedNotebook(e) {
       var row = e.closest("tr");
       notebook = getExecutedNotebookForRow(row);
       name = $(row).find("td.name")[0].innerHTML
