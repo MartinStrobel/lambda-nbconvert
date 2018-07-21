@@ -256,7 +256,7 @@
 
     function downloadAllRowResults(){
       var result = "";
-      $('#mainTable > tbody > tr').not(:first).each(function(){
+      $('#mainTable > tbody > tr').not(":first").each(function(){
         result.concat($(this).find("td.jsonResult")[0].innerHTML);
         result.concat("\n");
         });
