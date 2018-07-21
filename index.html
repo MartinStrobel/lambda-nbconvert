@@ -44,7 +44,7 @@
     </div>
     <table id="mainTable" class="table">
     <tr>
-      <th></th><th>File names</th><th>JSON results</th>
+      <th></th><th>File names</th><th>JSON results</th><th></th>
     </tr>
     </table>
 
@@ -195,7 +195,7 @@
       nameCell.innerHTML = JSON.stringify(name);
       nameCell.classList.add("name")
       row.setAttribute("notebook", notebook);
-      row.insertCell(-1);
+      row.insertCell(-1).classList.add("jsonResult") 
     }
 
     function deleteRow(e){
@@ -243,8 +243,10 @@
           console.log(userInfo.duration, "seconds of execution time.")
           console.log(userInfo,"userInfo")
           row.setAttribute("executedNotebook", JSON.stringify(userInfo.ipynb))
-          //TODO: Make access  nicer
-          row.children[2].innerHTML = JSON.stringify(userInfo.result)
+          $(row).find("td.jsonResult")[0].innerHTML; = JSON.stringify(userInfo.result)
+          var resultbuttonCell = row.insertCell(-1);
+          resultbuttonCell.innerHTML = "<button type='button' class='btn btn-sm btn-warning'  onclick='showRowResult(this)' ><i class='fa fa-trash-o'></i></button> \
+                              <button type='button' class='btn btn-sm btn-success' data-toggle='modal' data-target='#notebookModal' onclick='downloadRow(this)' ><i class='fa fa-search'> </i></button>"
         }
         else {
           console.log("Nope");
