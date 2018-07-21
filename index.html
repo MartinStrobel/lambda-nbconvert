@@ -219,7 +219,8 @@
     } 
 
     function showRow(e){
-      notebook = getNotebookForRow(e);
+      var row = e.closest("tr");
+      notebook = getNotebookForRow(row);
       modal = $("#notebookModal");
       modal.find(".code-container").value = JSON.stringify(notebook);
       loadJSON(notebook);
