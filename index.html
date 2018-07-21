@@ -247,6 +247,13 @@
       return JSON.parse(row.getAttribute("executedNotebook"));
     }
 
+    function downloadExecutedNotebook() {
+      var row = e.closest("tr");
+      notebook = getExecutedNotebookForRow(row);
+      name = $(row).find("td.name")[0].innerHTML
+      download(name.substr(2,name.length-4), notebook); //We use substring to get rid of the quotes
+    }
+
     var postDataRow = function (data,row) {
       var xhr = new XMLHttpRequest();
       xhr.open('POST', '');
@@ -260,7 +267,7 @@
           $(row).find("td.jsonResult")[0].innerHTML = JSON.stringify(userInfo.result);
           var resultbuttonCell = row.insertCell(-1);
           resultbuttonCell.innerHTML = "<button type='button' class='btn btn-sm btn-warning'  data-toggle='modal' data-target='#notebookModal' onclick='showRowResult(this)' ><i class='fa fa-search'></i></button> \
-                              <button type='button' class='btn btn-sm btn-success'  onclick='downloadRow(this)' ><i class='fa fa-download'> </i></button>"
+                              <button type='button' class='btn btn-sm btn-success'  onclick='downloadExecutedNotebook(this)' ><i class='fa fa-download'> </i></button>"
         }
         else {
           console.log("Nope");
