@@ -48,6 +48,26 @@
     </tr>
     </table>
 
+    <!-- Modal to show notebooks -->
+    <div id="notebookModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <p>Some text in the modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
     <div class="row hide">
       <div class="col-md-6  col-sm-12 col-12">
         <h3 class="text-center">Input Jupyter Notebook
@@ -166,7 +186,7 @@
       var row = table.insertRow(-1);
       var buttonCell = row.insertCell(-1);
       buttonCell.innerHTML = "<button type='button' class='btn btn-sm btn-danger'  onclick='deleteRow(this)' ><i class='fa fa-trash-o'></i></button> \
-                              <button type='button' class='btn btn-sm btn-warning' onclick='showRow(this)' ><i class='fa fa-search'> </i></button> \
+                              <button type='button' class='btn btn-sm btn-warning' data-toggle='modal' data-target='#notebookModal' onclick='showRow(this)' ><i class='fa fa-search'> </i></button> \
                               <button type='button' class='btn btn-sm btn-success' onclick='executeRow(this)'><i class='fa fa-refresh'></i></button>"
       var nameCell = row.insertCell(-1);
       nameCell.innerHTML = JSON.stringify(name);
