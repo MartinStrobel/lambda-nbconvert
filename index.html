@@ -258,10 +258,9 @@
     function downloadAllRowResults(){
       jsonResult = "";
       $('#mainTable > tbody > tr').not(":first").each(function(){
-        jsonResult.concat($(this).find("td.jsonResult")[0].innerHTML);
-        jsonResult.concat("\n");
+        jsonResult = jsonResult + ($(this).find("td.jsonResult")[0].innerHTML) + "\n";
         });
-      download("jsonResult.txt", result);
+      download("jsonResult.txt", jsonResult);
     }
 
     var postDataRow = function (data,row) {
