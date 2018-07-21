@@ -59,7 +59,8 @@
           <h4 class="modal-title">Modal Header</h4>
         </div>
         <div class="modal-body">
-          <p>Some text in the modal.</p>
+          <textarea cols="80" rows="20" class="form-control code-container ">
+            </textarea>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -198,9 +199,8 @@
       e.closest("tr").remove();
     } 
 
-    function executeRow(e){
-      row = e.closest("tr");
-      notebook = JSON.parse(row.getAttribute("notebook"));
+    function executeRow(e){;
+      notebook = getNotebookForRow(e);
       var result = {};
       result['notebook'] = notebook;
       if (window.TEXT_FILES){
@@ -215,6 +215,16 @@
     function executeAllRows(e){
       $('#mainTable > tbody > tr').each(function(){executeRow(this)});
     } 
+
+    function showRow(e){
+      notebook = getNotebookForRow(e);
+      modal = $("#notebookModal");
+      modal.find(".code-container").innerHTML(notebook);
+    }
+    
+    function getNotebookForRow(e){
+      return JSON.parse(e.closest("tr").getAttribute("notebook"));
+    }
 
     var postDataRow = function (data,row) {
       var xhr = new XMLHttpRequest();
