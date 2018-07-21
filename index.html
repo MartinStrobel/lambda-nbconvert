@@ -193,6 +193,7 @@
                               <button type='button' class='btn btn-sm btn-success' onclick='executeRow(this)'><i class='fa fa-refresh'></i></button>"
       var nameCell = row.insertCell(-1);
       nameCell.innerHTML = JSON.stringify(name);
+      nameCell.addClass("name")
       row.setAttribute("notebook", notebook);
       row.insertCell(-1);
     }
@@ -225,6 +226,7 @@
       modal = $("#notebookModal");
       modal.find(".code-container").value = JSON.stringify(notebook);
       loadJSON(notebook);
+      modal.find(".modal-title").innerHTML = row.find(td.name).innerHTML();
     }
 
     function getNotebookForRow(row){
