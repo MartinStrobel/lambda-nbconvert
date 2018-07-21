@@ -200,7 +200,8 @@
     } 
 
     function executeRow(e){;
-      notebook = getNotebookForRow(e);
+      var row = e.closest("tr");
+      notebook = getNotebookForRow(row);
       var result = {};
       result['notebook'] = notebook;
       if (window.TEXT_FILES){
@@ -221,9 +222,9 @@
       modal = $("#notebookModal");
       modal.find(".code-container").innerHTML(notebook);
     }
-    
+
     function getNotebookForRow(e){
-      return JSON.parse(e.closest("tr").getAttribute("notebook"));
+      return JSON.parse(row.getAttribute("notebook"));
     }
 
     var postDataRow = function (data,row) {
