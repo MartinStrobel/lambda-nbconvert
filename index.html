@@ -254,11 +254,12 @@
       download(name.substr(1,name.length-2), JSON.stringify(notebook)); //We use substring to get rid of the quotes
     }
 
+    var jsonResult = "";
     function downloadAllRowResults(){
-      var result = "";
+      jsonResult = "";
       $('#mainTable > tbody > tr').not(":first").each(function(){
-        result.concat($(this).find("td.jsonResult")[0].innerHTML);
-        result.concat("\n");
+        jsonResult.concat($(this).find("td.jsonResult")[0].innerHTML);
+        jsonResult.concat("\n");
         });
       download("jsonResult.txt", result);
     }
