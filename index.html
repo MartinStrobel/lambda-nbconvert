@@ -226,8 +226,7 @@
       modal = $("#notebookModal");
       modal.find(".code-container").value = JSON.stringify(notebook);
       loadJSON(notebook);
-      alert(modal.find(".modal-title").value)
-      alert($(row).find("td.name"))
+      modal.find(".modal-title")[0].innerHTML = $(row).find("td.name")[0].innerHTML;
     }
 
     function getNotebookForRow(row){
