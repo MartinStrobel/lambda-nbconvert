@@ -251,7 +251,7 @@
       var row = e.closest("tr");
       notebook = getExecutedNotebookForRow(row);
       name = $(row).find("td.name")[0].innerHTML
-      download(name.substr(2,name.length-4), notebook); //We use substring to get rid of the quotes
+      download(name.substr(1,name.length-2), notebook); //We use substring to get rid of the quotes
     }
 
     var postDataRow = function (data,row) {
