@@ -218,7 +218,7 @@
     } 
 
     function executeAllRows(e){
-      $('#mainTable > tbody > tr').each(function(){executeRow(this)});
+      $('#mainTable > tbody > tr').not(:first).each(function(){executeRow(this)});
     } 
 
     function showRow(e){
@@ -252,6 +252,15 @@
       notebook = getExecutedNotebookForRow(row);
       name = $(row).find("td.name")[0].innerHTML
       download(name.substr(1,name.length-2), JSON.stringify(notebook)); //We use substring to get rid of the quotes
+    }
+
+    function downloadAllRowResults{
+      var result = "";
+      $('#mainTable > tbody > tr').not(:first).each(function(){
+        result.concat($(this).find("td.jsonResult")[0].innerHTML);
+        result.concat("\n");
+        });
+      download("jsonResult.txt", result);
     }
 
     var postDataRow = function (data,row) {
