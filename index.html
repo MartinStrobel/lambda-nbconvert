@@ -38,18 +38,27 @@
       </div>
     </div>
     <div class="col-md-6  col-sm-12 col-12">
-        Select notebooks: <input type="file" name="notebooks" multiple onchange="onNotebooksSelected(event)"> <br>
-        Select text file(s): <input type="file" name="textfiles" multiple onchange="onTextFilesSelected(event)"> <br>
+        Add notebooks: <input class="custom-file-input" type="file" name="notebooks" multiple onchange="onNotebooksSelected(event)"> <br>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroupFileAddon01">Select text file(s): </span>
+          </div>
+          <div class="custom-file">
+            <input class="custom-file-input" type="file" name="textfiles" multiple onchange="onTextFilesSelected(event)"> 
+            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+          </div>
+        </div>
+        <br>
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-sm btn-primary" onclick="executeAllRows()"><i class='fa fa-refresh'></i>Run all</a>
+          <button type="button" class="btn btn-sm btn-primary" onclick="executeAllRows()"><i class='fa fa-refresh'></i> Run all</a>
           </button>
-          <button type="button" class="btn btn-sm btn-secondary" onclick="downloadAllRowResults()"><i class='fa fa-download'></i>Download all JSON results</a>
+          <button type="button" class="btn btn-sm btn-secondary" onclick="downloadAllRowResults()"><i class='fa fa-download'></i> Download all JSON results</a>
           </button>
         </div>
     </div>
     <table id="mainTable" class="table table-hover table-sm">
     <tr>
-      <thead class="thead-dark">
+      <thead>
         <th></th><th>File names</th><th>JSON results</th><th></th>
       </thead>
     </tr>
