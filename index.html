@@ -41,9 +41,9 @@
         Select notebooks: <input type="file" name="notebooks" multiple onchange="onNotebooksSelected(event)"> <br>
         Select text file(s): <input type="file" name="textfiles" multiple onchange="onTextFilesSelected(event)"> <br>
         <div class="btn-group" role="group">
-          <button type="button" class="btn btn-sm btn-success" onclick="executeAllRows()">Run all</a>
+          <button type="button" class="btn btn-sm btn-primary" onclick="executeAllRows()">Run all</a>
           </button>
-          <button type="button" class="btn btn-sm btn-success" onclick="downloadAllRowResults()">Download all JSON results</a>
+          <button type="button" class="btn btn-sm btn-secondary" onclick="downloadAllRowResults()">Download all JSON results</a>
           </button>
         </div>
     </div>
@@ -194,9 +194,9 @@
       var row = table.insertRow(-1);
       var buttonCell = row.insertCell(-1);
       buttonCell.innerHTML = "<div class='btn-group' role='group'>\
-                              <button type='button' class='btn btn-sm btn-danger'  onclick='deleteRow(this)' ><i class='fa fa-trash-o'></i></button> \
-                              <button type='button' class='btn btn-sm btn-warning' data-toggle='modal' data-target='#notebookModal' onclick='showRow(this)' ><i class='fa fa-search'> </i></button> \
-                              <button type='button' class='btn btn-sm btn-success' onclick='executeRow(this)'><i class='fa fa-refresh'></i></button></div>"
+                              <button type='button' class='btn btn-sm btn-primary' onclick='executeRow(this)'><i class='fa fa-refresh'></i></button>\
+                              <button type='button' class='btn btn-sm btn-info' data-toggle='modal' data-target='#notebookModal' onclick='showRow(this)' ><i class='fa fa-search'> </i></button> \
+                              <button type='button' class='btn btn-sm btn-danger'  onclick='deleteRow(this)' ><i class='fa fa-trash-o'></i></button></div>"
       var nameCell = row.insertCell(-1);
       nameCell.innerHTML = JSON.stringify(name);
       nameCell.classList.add("name")
@@ -281,8 +281,8 @@
           $(row).find("td.jsonResult")[0].innerHTML = JSON.stringify(userInfo.result);
           var resultbuttonCell = row.insertCell(-1);
           resultbuttonCell.innerHTML = "<div class='btn-group' role='group'>\
-                              <button type='button' class='btn btn-sm btn-warning'  data-toggle='modal' data-target='#notebookModal' onclick='showRowResult(this)' ><i class='fa fa-search'></i></button> \
-                              <button type='button' class='btn btn-sm btn-success'  onclick='downloadExecutedNotebook(this)' ><i class='fa fa-download'> </i></button></div>"
+                              <button type='button' class='btn btn-sm btn-info'  data-toggle='modal' data-target='#notebookModal' onclick='showRowResult(this)' ><i class='fa fa-search'></i></button> \
+                              <button type='button' class='btn btn-sm btn-secondary'  onclick='downloadExecutedNotebook(this)' ><i class='fa fa-download'> </i></button></div>"
         }
         else {
           console.log("Nope");
