@@ -242,8 +242,8 @@
           var userInfo = JSON.parse(xhr.responseText);
           console.log(userInfo.duration, "seconds of execution time.")
           console.log(userInfo,"userInfo")
-          row.setAttribute("executedNotebook", JSON.stringify(userInfo.ipynb))
-          $(row).find("td.jsonResult")[0].innerHTML; = JSON.stringify(userInfo.result)
+          row.setAttribute("executedNotebook", JSON.stringify(userInfo.ipynb));
+          $(row).find("td.jsonResult")[0].innerHTML = JSON.stringify(userInfo.result);
           var resultbuttonCell = row.insertCell(-1);
           resultbuttonCell.innerHTML = "<button type='button' class='btn btn-sm btn-warning'  onclick='showRowResult(this)' ><i class='fa fa-trash-o'></i></button> \
                               <button type='button' class='btn btn-sm btn-success' data-toggle='modal' data-target='#notebookModal' onclick='downloadRow(this)' ><i class='fa fa-search'> </i></button>"
