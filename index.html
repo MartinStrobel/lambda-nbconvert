@@ -193,7 +193,7 @@
                               <button type='button' class='btn btn-sm btn-success' onclick='executeRow(this)'><i class='fa fa-refresh'></i></button>"
       var nameCell = row.insertCell(-1);
       nameCell.innerHTML = JSON.stringify(name);
-      nameCell.addClass("name")
+      nameCell.classList.add("name")
       row.setAttribute("notebook", notebook);
       row.insertCell(-1);
     }
