@@ -38,23 +38,24 @@
       </div>
     </div>
     <div class="col-md-6  col-sm-12 col-12">
-      <input class="custom-file-input" type="file" name="notebooks" multiple onchange="onNotebooksSelected(event)"> <label class="custom-file-label" for="inputGroupFile01">Add notebooks</label><br>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
+      <input class="custom-file-input hide" id="uploadNotebooks" multiple="" onchange="onNotebooksSelected(event)" type="file"> <br>
+      <div class="btn-group" role="group" style="margin-bottom:8pt">
+          <label style="margin-bottom:0pt" type="button" for="uploadNotebooks" class="btn  btn-success"><i class="fa fa-upload"> Add notebooks</label>
+          <button type="button" class="btn btn-sm btn-primary" onclick="executeAllRows()"><i class="fa fa-refresh"></i> Run all
+          </button>
+          <button type="button" class="btn btn-sm btn-secondary" onclick="downloadAllRowResults()"><i class="fa fa-download"></i> Download all JSON results
+          </button>
+      </div>
+      <br>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
             <span class="input-group-text" id="inputGroupFileAddon01">Select text file(s): </span>
-          </div>
-          <div class="custom-file">
-            <input class="custom-file-input" type="file" name="textfiles" multiple onchange="onTextFilesSelected(event)"> 
-            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-          </div>
         </div>
-        <br>
-        <div class="btn-group" role="group">
-          <button type="button" class="btn btn-sm btn-primary" onclick="executeAllRows()"><i class='fa fa-refresh'></i> Run all</a>
-          </button>
-          <button type="button" class="btn btn-sm btn-secondary" onclick="downloadAllRowResults()"><i class='fa fa-download'></i> Download all JSON results</a>
-          </button>
+        <div class="custom-file">
+          <input class="custom-file-input" name="textfiles" multiple="" onchange="onTextFilesSelected(event)" type="file"> 
+          <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
         </div>
+      </div>
     </div>
     <table id="mainTable" class="table table-hover table-sm">
     <tr>
