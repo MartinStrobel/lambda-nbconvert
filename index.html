@@ -229,8 +229,21 @@
       modal.find(".modal-title")[0].innerHTML = $(row).find("td.name")[0].innerHTML;
     }
 
+    function showRowResult(e){
+      var row = e.closest("tr");
+      notebook = getExecutedNotebookForRow(row);
+      modal = $("#notebookModal");
+      modal.find(".code-container").value = JSON.stringify(notebook);
+      loadJSON(notebook);
+      modal.find(".modal-title")[0].innerHTML = "<b> Executed: </b>".concat($(row).find("td.name")[0].innerHTML);
+    }
+
     function getNotebookForRow(row){
       return JSON.parse(row.getAttribute("notebook"));
+    }
+
+    function getExecutedNotebookForRow(row){
+      return JSON.parse(row.getAttribute("executedNotebook"));
     }
 
     var postDataRow = function (data,row) {
@@ -245,8 +258,8 @@
           row.setAttribute("executedNotebook", JSON.stringify(userInfo.ipynb));
           $(row).find("td.jsonResult")[0].innerHTML = JSON.stringify(userInfo.result);
           var resultbuttonCell = row.insertCell(-1);
-          resultbuttonCell.innerHTML = "<button type='button' class='btn btn-sm btn-warning'  onclick='showRowResult(this)' ><i class='fa fa-trash-o'></i></button> \
-                              <button type='button' class='btn btn-sm btn-success' data-toggle='modal' data-target='#notebookModal' onclick='downloadRow(this)' ><i class='fa fa-search'> </i></button>"
+          resultbuttonCell.innerHTML = "<button type='button' class='btn btn-sm btn-warning'  onclick='showRowResult(this)' ><i class='fa fa-search'></i></button> \
+                              <button type='button' class='btn btn-sm btn-success' data-toggle='modal' data-target='#notebookModal' onclick='downloadRow(this)' ><i class='fa fa-download'> </i></button>"
         }
         else {
           console.log("Nope");
