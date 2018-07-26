@@ -305,7 +305,7 @@
     }
 
     function parseJSONresult(result){
-      result =  result.replace(/\"/g,"").replace(/{cvs: /,"").replace("}","");
+      return  result.replace(/\"/g,"").replace(/{cvs: /,"").replace("}","");
     }
 
     /* 
