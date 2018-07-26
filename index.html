@@ -275,7 +275,7 @@
     function downloadAllRowResults(){
       jsonResult = "";
       $('#mainTable > tbody > tr').not(":first").each(function(){
-        jsonResult = jsonResult + ($(this).find("td.jsonResult")[0].innerHTML) + "\n";
+        jsonResult = jsonResult + ($(this).find("td.jsonResult")[0].innerHTML).substr(2,$(this).find("td.jsonResult")[0].innerHTML.lastindexOf("]")-2) + "\n";
         });
       download("jsonResult.txt", jsonResult);
     }
