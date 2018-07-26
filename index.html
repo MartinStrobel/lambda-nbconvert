@@ -290,7 +290,7 @@
           console.log(userInfo.duration, "seconds of execution time.")
           console.log(userInfo,"userInfo")
           row.setAttribute("executedNotebook", JSON.stringify(userInfo.ipynb));
-          $(row).find("td.jsonResult")[0].innerHTML = JSON.stringify(userInfo.result);
+          $(row).find("td.jsonResult")[0].innerHTML = parseJSONresult(JSON.stringify(userInfo.result));
           var resultbuttonCell = row.insertCell(-1);
           resultbuttonCell.innerHTML = "<div class='btn-group' role='group'>\
                               <button type='button' class='btn btn-sm btn-info'  data-toggle='modal' data-target='#notebookModal' onclick='showRowResult(this)' ><i class='fa fa-search'></i></button> \
@@ -302,6 +302,10 @@
         }
       };
       xhr.send(JSON.stringify(data));
+    }
+
+    function parseJSONresult(result){
+      result =  result.replace(/\"/g,"").replace(/{cvs: /,"").replace("}","");
     }
 
     /* 
