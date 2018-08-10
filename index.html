@@ -248,7 +248,8 @@
     }
 
     function parseJSONresult(result){
-      return  result.replace(/\\"\s?/g,"").replace(/{cvs: /,"").replace("}","");
+      return result
+      //return  result.replace(/\\"\s?/g,"").replace(/{cvs: /,"").replace("}","");
     }
 
     /* 
