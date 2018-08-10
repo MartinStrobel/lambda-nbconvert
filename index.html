@@ -248,8 +248,7 @@
     }
 
     function parseJSONresult(result){
-      return result
-      //return  result.replace(/\\"\s?/g,"").replace(/{cvs: /,"").replace("}","");
+      return  result.replace(/\\"\s?/g,"").replace(/{cvs: /,"").replace("}","").replace(/,\s/,",");
     }
 
     /* 
@@ -292,8 +291,8 @@
     }
 
     function calculateNUSMatricNumber(id) {
-    var matches = id.toUpperCase().match(/^A\d{7}|U\d{6,7}/);
-    if (matches) {
+      var matches = id.toUpperCase().match(/^A\d{7}|U\d{6,7}/);
+      if (matches) {
         var match = matches[0];
 
         // Discard 3rd digit from U-prefixed NUSNET ID
@@ -311,9 +310,8 @@
         }
 
         return match + 'YXWURNMLJHEAB' [sum % 13];
+      }
     }
-};
-    document.getElementById('textfile').addEventListener('change', onTextFileSelected);
 
   </script>
   <script type="text/javascript"  src="https://s3-ap-southeast-1.amazonaws.com/alset-public/main-jupter-react-viewer.js"></script>
