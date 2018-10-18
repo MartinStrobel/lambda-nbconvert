@@ -24,7 +24,7 @@ Resources:
       Handler: main.handler
       Runtime: python3.6
       #CodeUri: ./build/code
-      Timeout: 180
+      Timeout: 1200
       MemorySize: 512
       Environment:
         Variables:

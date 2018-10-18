@@ -39,6 +39,6 @@ Resources:
       Handler: main.handler
       MemorySize: 512
       Runtime: python3.6
-      Timeout: 180
+      Timeout: 1200
     Type: AWS::Serverless::Function
 Transform: AWS::Serverless-2016-10-31
